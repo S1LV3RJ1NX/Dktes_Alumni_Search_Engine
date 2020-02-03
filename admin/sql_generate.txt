@@ -1,0 +1,82 @@
+CREATE TABLE `alumni_info` (
+  `fname` varchar(20) NOT NULL,
+  `lname` varchar(20) NOT NULL,
+  `addr` varchar(100) DEFAULT NULL,
+  `email` varchar(30) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `dept` varchar(35) NOT NULL,
+  `passout` varchar(4) NOT NULL,
+  `mobile` varchar(10) NOT NULL,
+  `id` varchar(15) NOT NULL,
+  `company` varchar(50) DEFAULT NULL,
+  `desgn` varchar(20) NOT NULL,
+  `from_yr` varchar(8) NOT NULL,
+  `to_yr` varchar(8) NOT NULL,
+  `git` varchar(100) DEFAULT NULL,
+  `linkedin` varchar(100) DEFAULT NULL,
+  `website` varchar(100) DEFAULT NULL,
+  `bio` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `mobile` (`mobile`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `admin` (
+  `id` int(4) NOT NULL AUTO_INCREMENT,
+  `email` varchar(30) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `education` (
+  `pid` varchar(15) NOT NULL,
+  `ssc` varchar(100) DEFAULT NULL,
+  `ssc_per` float DEFAULT NULL,
+  `hsc` varchar(100) DEFAULT NULL,
+  `hsc_per` float DEFAULT NULL,
+  `ug` varchar(100) DEFAULT NULL,
+  `ug_per` float DEFAULT NULL,
+  KEY `pid` (`pid`),
+  CONSTRAINT `fk` FOREIGN KEY (`pid`) REFERENCES `alumni_info` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `profile` (
+  `pid` varchar(15) NOT NULL,
+  `img_path` varchar(300) NOT NULL,
+  KEY `pid` (`pid`),
+  CONSTRAINT `fk_2` FOREIGN KEY (`pid`) REFERENCES `alumni_info` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `pass_reset` (
+  `email` varchar(30) NOT NULL,
+  `token` varchar(255) NOT NULL,
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `skills` (
+  `pid` varchar(15) NOT NULL,
+  `skills` text,
+  `project` text,
+  `certi` text,
+  `papers` text,
+  `accomp` text,
+  UNIQUE KEY `pid` (`pid`),
+  CONSTRAINT `fk_4` FOREIGN KEY (`pid`) REFERENCES `alumni_info` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `work` (
+  `pid` varchar(15) NOT NULL,
+  `company_name` varchar(50) NOT NULL,
+  `desgn` varchar(30) NOT NULL,
+  `from_yr` int(4) NOT NULL,
+  `to_yr` int(4) NOT NULL,
+  KEY `fk` (`pid`),
+  CONSTRAINT `fk_3` FOREIGN KEY (`pid`) REFERENCES `alumni_info` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
